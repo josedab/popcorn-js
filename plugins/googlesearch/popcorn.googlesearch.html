@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Popcorn Google search Plug-in Demo</title>
+
+  <!--
+    ATTENTION
+
+    This demo uses does not use API key when executing Google search Popcorn.js
+    plugin. Feel free to add it as part of the plugin. Normally the use policy is per ip instead of per application.
+  -->
+
+  <script src="../../popcorn.js"></script>
+  <script src="popcorn.googlesearch.js"></script>
+  <script>
+    document.addEventListener( "DOMContentLoaded", function() {
+    
+    var p = Popcorn("#video")
+       .googlesearch({
+           start: 5, // seconds
+           end: 15, // seconds
+           term: "surf",
+           target: "gsearch-container1",
+           searchTypes: ["web", "blogs", "news"]
+       } )
+       .googlesearch({
+           start: 10, // seconds
+           end: 20, // seconds
+           term: "penguin",
+           target: "gsearch-container2",
+           searchTypes: ["web"]
+       } )
+       .googlesearch({
+           start: 15, // seconds
+           end: 30, // seconds
+           term: "technology",
+           target: "gsearch-container3",
+           searchTypes: ["web", "blogs", "news", "patents"]
+       } )
+       
+      
+    }, false);
+  </script>
+</head>
+<body>
+  <h1 id="qunit-header">Popcorn Google search Plug-in Demo</h1>
+  <p> Google search for web, blogs and news related to the therm 'surf' will appear at 5 seconds and disappear at 15 seconds.</p>
+  <p> Web search for 'penguin' will appear at 10 seconds and disappear at 20 seconds.</p>
+  <p> 'technology' will be searched across web, blogs, news and patents at 15 seconds and disappear at 30 seconds.</p>
+  <div>
+    <video id="video"
+      controls 
+      width="250px"
+      poster="../../test/poster.png">
+
+      <source id="mp4"
+        src="../../test/trailer.mp4"
+        type='video/mp4; codecs="avc1, mp4a"'>
+
+      <source id="ogv"
+        src="../../test/trailer.ogv"
+        type='video/ogg; codecs="theora, vorbis"'>
+
+      <p>Your user agent does not support the HTML5 Video element.</p>
+
+    </video>
+  </div>
+  
+  <div id="gsearch-container1" width="50%" height="50%">
+  </div>
+  
+  <div id="gsearch-container2" width="50%" height="50%">
+  </div>
+  
+  <div id="gsearch-container3" width="50%" height="50%">
+  </div>
+</body>
+</html>
