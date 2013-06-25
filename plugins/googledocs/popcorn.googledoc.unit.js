@@ -1,12 +1,12 @@
-asyncTest( "Popcorn Image Plugin", function() {
+asyncTest( "Popcorn Google Docs Plugin", function() {
 
   var popped = Popcorn( "#video" ),
       expects = 9,
       count = 0,
       setupId,
       imagediv = document.getElementById( "imagediv" ),
-      sources = [
-        "https://www.drumbeat.org/media//images/drumbeat-logo-splash.png",
+      idSources = [
+        "1t8M4vzoy9pdjoiJ0Dq8CVgBRQ2lGBIWz6UJL_k9bVpM",
         "http://www.petmountain.com/category/mini/organic-dog-supplies/520/organic-dog-supplies.jpg",
         "http://www.botskool.com/sites/default/files/images/javascript.png"
       ];
@@ -20,13 +20,13 @@ asyncTest( "Popcorn Image Plugin", function() {
     }
   }
 
-  ok( "image" in popped, "image is a method of the popped instance" );
+  ok( "googledoc" in popped, "googledoc is a method of the popped instance" );
   plus();
 
   equal( imagediv.innerHTML, "", "initially, there is nothing inside the imagediv" );
   plus();
 
-  popped.image({
+  popped.googledoc({
     start: 1,
     end: 3,
     href: "http://www.drumbeat.org/",
