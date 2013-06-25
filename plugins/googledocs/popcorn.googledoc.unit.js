@@ -4,11 +4,13 @@ asyncTest( "Popcorn Google Docs Plugin", function() {
       expects = 9,
       count = 0,
       setupId,
-      imagediv = document.getElementById( "imagediv" ),
-      idSources = [
-        "1t8M4vzoy9pdjoiJ0Dq8CVgBRQ2lGBIWz6UJL_k9bVpM",
-        "http://www.petmountain.com/category/mini/organic-dog-supplies/520/organic-dog-supplies.jpg",
-        "http://www.botskool.com/sites/default/files/images/javascript.png"
+      googledocdiv = document.getElementById( "googledocdiv" ),
+      sources = [
+        "dEx5YXNJczBhYXRzSUJIU0NuS1NzUWc6MQ", // form
+        "1t8M4vzoy9pdjoiJ0Dq8CVgBRQ2lGBIWz6UJL_k9bVpM", // document
+        "0AjOfr6eosPR_dDJpZHMwdGxqMHBCaU1oeGdsNVBKenc", // spreadsheet
+        "1OZ_38UKI3IVwGqZJu2mMgpSHjsMmy6mcAx03Z3Y7KqY", // presentation
+        "1pwj9ixd8eMdVt9byzcosMANL60HCo-xytopABFXtrFU" // drawing
       ];
 
   expect( expects );
@@ -23,133 +25,100 @@ asyncTest( "Popcorn Google Docs Plugin", function() {
   ok( "googledoc" in popped, "googledoc is a method of the popped instance" );
   plus();
 
-  equal( imagediv.innerHTML, "", "initially, there is nothing inside the imagediv" );
+  equal( googledocdiv.innerHTML, "", "initially, there is nothing inside the googledocdiv" );
   plus();
+  
+  var target = "googledocdiv";
+  
 
   popped.googledoc({
-    start: 1,
-    end: 3,
-    href: "http://www.drumbeat.org/",
-    src: sources[ 0 ],
-    text: "DRUMBEAT",
-    target: "imagediv"
-  })
-  .image({
-    start: 4,
-    end: 6,
-    src: sources[ 1 ],
-    target: "imagediv"
-  })
-  .image({
-    start: 5,
-    end: 6,
-    src: sources[ 2 ],
-    target: "imagediv"
-  });
+                start : 1,
+                end : 5,
+                id : sources[0],
+                type : "form",
+                target : target,
+                width : 480,
+                height : 389
+        })
+        // Document
+        .googledoc({
+            start : 2,
+            end : 10,
+            id : sources[1],
+            type : "document",
+            target : target,
+            width : 480,
+            height : 389
+        })
+        // Spreadsheet
+        .googledoc({
+            start : 3,
+            end : 8,
+            id : sources[2],
+            type : "spreadsheet",
+            target : target,
+            width : 500,
+            height : 300
+        })
+        // Presentation
+        .googledoc({
+            start : 7,
+            end : 13,
+            id : sources[3],
+            type : "presentation",
+            target : target,
+            width : 480,
+            height : 389
+        })
+        // Drawing
+        .googledoc({
+            start : 8,
+            end : 15,
+            id : sources[4],
+            type : "drawing",
+            target : target,
+            width : 480,
+            height : 389
+        });
+  
 
   setupId = popped.getLastTrackEventId();
 
   popped.cue( 2, function() {
-    ok( imagediv.children[ 0 ].style.display !== "none", "inline", "Div contents are displayed" );
+	equal( googledocdiv.childElementCount, 5, "googledocdiv now has five inner elements" );
     plus();
-    equal( imagediv.querySelector("img").nodeName, "IMG", "An image exists" );
-    plus();
-  });
-
-  popped.cue( 3, function() {
-    equal( imagediv.children[ 0 ].style.display, "none", "Div contents are hidden again" );
+    equal( googledocdiv.children[ 0 ].style.display , "inline", "googledocdiv is visible on the page" );
     plus();
   });
 
-  popped.cue( 5, function() {
-    [].forEach.call( document.querySelectorAll( "#imagediv a img" ), function( img, idx ) {
-      ok( img.src === sources[ idx ], "Image " + idx + " is in the right order" );
-      plus();
-    });
-  });
-
-  popped.cue( 7, function() {
-    popped.pause().removeTrackEvent( setupId );
-    ok( !imagediv.children[ 2 ], "removed image was properly destroyed" );
+  popped.exec( 3, function() {
+    equal( googledocdiv.children[ 0 ].style.display , "inline", "form is still visible on the page" );
+    plus();
+    equal( googledocdiv.children[ 1 ].style.display , "inline", "document is visible on the page" );
+    plus();
+    equal( googledocdiv.children[ 2 ].style.display , "inline", "spreadsheet is visible on the page" );
+    plus();
+    equal( googledocdiv.children[ 3 ].style.display , "none", "presentation is not visible on the page" );
+    plus();
+    equal( googledocdiv.children[ 4 ].style.display , "none", "drawing is not visible on the page" );
     plus();
   });
+
+  popped.exec( 5, function() {
+    equal( googledocdiv.children[ 0 ].style.display , "inline", "form is still visible on the page" );
+    plus();
+    equal( googledocdiv.children[ 1 ].style.display , "inline", "document is visible on the page" );
+    plus();
+    equal( googledocdiv.children[ 2 ].style.display , "inline", "spreadsheet is visible on the page" );
+    plus();
+    equal( googledocdiv.children[ 3 ].style.display , "none", "presentation is not visible on the page" );
+    plus();
+    equal( googledocdiv.children[ 4 ].style.display , "none", "drawing is not visible on the page" );
+    plus();
+  });
+
+  // TODO: it would be useful to test when an unknown type is passed to the googledoc method
 
   popped.volume( 0 ).play();
 });
 
-asyncTest( "Zerostart doesn't rehide", 1, function() {
-  var popped = Popcorn( "#video" ),
-      zerostart = document.getElementById( "zerostart" );
-
-  popped.on( "canplayall", function() {
-    popped.currentTime(0);
-
-    popped.image({
-      start: 0,
-      end: 3,
-      src: "https://www.drumbeat.org/media/images/drumbeat-logo-splash.png",
-      target: "zerostart"
-    });
-
-    popped.cue( 1, function() {
-      ok( zerostart.children[ 0 ].style.display !== "none", "display area displayed at start: 0 without re-hiding" );
-      popped.destroy();
-      start();
-    });
-
-    popped.play();
-  });
-});
-
-asyncTest( "size test", 4, function() {
-
-  var popped = Popcorn( "#video" ),
-      withsize = document.getElementById( "withsize" ),
-      withoutsizeinsize = document.getElementById( "withoutsizeinsize" );
-
-  popped.on( "canplayall", function() {
-    popped.currentTime(0);
-
-    // images take on the size of the parent, if the parent has a size
-    popped.image({
-      start: 0,
-      end: 3,
-      src: "https://www.drumbeat.org/media/images/drumbeat-logo-splash.png",
-      target: "withsize"
-    });
-
-    // multiple images take on the size of the original parent,
-    // and not the size of the parent with an image. Testing 3 images total.
-    popped.image({
-      start: 0,
-      end: 3,
-      src: "https://www.drumbeat.org/media/images/drumbeat-logo-splash.png",
-      target: "withsize"
-    }).image({
-      start: 0,
-      end: 3,
-      src: "https://www.drumbeat.org/media/images/drumbeat-logo-splash.png",
-      target: "withsize"
-    });
-
-    // should only take on the size if it is explicitly defined in the parent,
-    // so not the parent's parent
-    popped.image({
-      start: 0,
-      end: 3,
-      src: "https://www.drumbeat.org/media/images/drumbeat-logo-splash.png",
-      target: "withoutsizeinsize"
-    });
-
-    popped.cue( 1, function() {
-
-      equal( withsize.children[ 0 ].children[ 0 ].offsetWidth, 400, "display area displayed at start: 0 without re-hiding" );
-      equal( withsize.children[ 1 ].children[ 0 ].offsetWidth, 400, "display area displayed at start: 0 without re-hiding" );
-      equal( withsize.children[ 2 ].children[ 0 ].offsetWidth, 400, "display area displayed at start: 0 without re-hiding" );
-      equal( withoutsizeinsize.children[ 0 ].children[ 0 ].offsetWidth, 300, "display area displayed at start: 0 without re-hiding" );
-      start();
-    });
-
-    popped.play();
-  });
-});
