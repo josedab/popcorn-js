@@ -106,8 +106,9 @@
         
         function createDocument (htmlElem, options) {
         /*
-        https://docs.google.com/document/pub?id=1t8M4vzoy9pdjoiJ0Dq8CVgBRQ2lGBIWz6UJL_k9bVpM
-        <iframe src="https://docs.google.com/document/pub?id=1t8M4vzoy9pdjoiJ0Dq8CVgBRQ2lGBIWz6UJL_k9bVpM&amp;embedded=true"></iframe>
+          Example of output generated:
+            https://docs.google.com/document/pub?id=1t8M4vzoy9pdjoiJ0Dq8CVgBRQ2lGBIWz6UJL_k9bVpM
+            <iframe src="https://docs.google.com/document/pub?id=1t8M4vzoy9pdjoiJ0Dq8CVgBRQ2lGBIWz6UJL_k9bVpM&amp;embedded=true"></iframe>
         */
         options.url = 'https://docs.google.com/document/pub?id=' + options.id;
         htmlElem.src = options.url;
@@ -115,8 +116,16 @@
         };
 
         function createSpreadsheet (htmlElem, options) {
-            // https://docs.google.com/spreadsheet/pub?key=0AjOfr6eosPR_dEx5YXNJczBhYXRzSUJIU0NuS1NzUWc&output=html
-            // <iframe width='500' height='300' frameborder='0' src='https://docs.google.com/spreadsheet/pub?key=0AjOfr6eosPR_dEx5YXNJczBhYXRzSUJIU0NuS1NzUWc&output=html&widget=true'></iframe>
+            
+            /*
+            Example of iframe for spreadsheet (inferred from url)
+            Url:  https://docs.google.com/spreadsheet/pub?key=0AjOfr6eosPR_dEx5YXNJczBhYXRzSUJIU0NuS1NzUWc&output=html
+            <iframe width='500' 
+                    height='300' 
+                    frameborder='0' 
+                    src='https://docs.google.com/spreadsheet/pub?key=0AjOfr6eosPR_dEx5YXNJczBhYXRzSUJIU0NuS1NzUWc&output=html&widget=true'>
+            </iframe>
+            */
             
             options.url = 'https://docs.google.com/spreadsheet/pub?key=' + options.id;
 
@@ -131,8 +140,17 @@
         };
 
         function createForm (htmlElem, options) {
-            // <iframe src="https://docs.google.com/spreadsheet/viewform?formkey=dEx5YXNJczBhYXRzSUJIU0NuS1NzUWc6MQ" frameborder="0" width="480" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            
+            /*
+            Example of iframe for form:
+                <iframe src="https://docs.google.com/spreadsheet/viewform?formkey=dEx5YXNJczBhYXRzSUJIU0NuS1NzUWc6MQ" 
+                        frameborder="0" 
+                        width="480" height="389" 
+                        allowfullscreen="true" mozallowfullscreen="true" 
+                        webkitallowfullscreen="true">
+                </iframe>
 
+            */
             options.url = 'https://docs.google.com/spreadsheet/viewform?formkey=' + options.id;
 
             htmlElem.src = options.url;
@@ -144,14 +162,30 @@
 
         function createDrawing (htmlElem, options) {
         
-            // <img src="https://docs.google.com/drawings/pub?id=1zxmvwG1WNbymsq1Ndnk8Jr-SCoI3zczAVTNfMzTDOvE&amp;w=1058&amp;h=1069">
+            /*
+             * Example of img tag from google drawings:
+             * <img src="https://docs.google.com/drawings/pub?
+             *              id=1zxmvwG1WNbymsq1Ndnk8Jr-SCoI3zczAVTNfMzTDOvE&amp;w=1058&amp;h=1069">
+             */ 
 
             htmlElem.src = 'https://docs.google.com/drawings/pub?id=' + options.id + '&w=' + options.width + '&h=' + options.height;
         };
 
         function createPresentation (htmlElem, options) {
-            // <iframe src="https://docs.google.com/presentation/embed?id=1OZ_38UKI3IVwGqZJu2mMgpSHjsMmy6mcAx03Z3Y7KqY&start=false&loop=false&delayms=3000" frameborder="0" width="960" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-            options.url = 'https://docs.google.com/presentation/embed?id=' + options.id + '&start=false&loop=false&delayms=3000';
+            /*
+             Example of iframe for presentation:
+                 <iframe src="https://docs.google.com/presentation/embed?
+                                 id=1OZ_38UKI3IVwGqZJu2mMgpSHjsMmy6mcAx03Z3Y7KqY&start=false&loop=false&delayms=3000" 
+                         frameborder="0" 
+                         width="960" height="749" 
+                         allowfullscreen="true" 
+                         mozallowfullscreen="true" 
+                         webkitallowfullscreen="true">
+                 </iframe>
+             */
+            options.url = 'https://docs.google.com/presentation/embed?id=' + 
+                          options.id + 
+                          '&start=false&loop=false&delayms=3000';
 
             htmlElem.src = options.url;
             htmlElem.allowfullscreen = true;
@@ -159,7 +193,7 @@
             htmlElem.webkitallowfullscreen = true;
         };
 
-        // Example: 
+        // Example of output url format:
         // https://docs.google.com/spreadsheet/pub?key=0AjOfr6eosPR_dEx5YXNJczBhYXRzSUJIU0NuS1NzUWc&output=pdf
         // https://docs.google.com/spreadsheet/pub?key=0AjOfr6eosPR_dEx5YXNJczBhYXRzSUJIU0NuS1NzUWc&output=html
         function getOutputUrlForFormat (url,format) {
@@ -204,7 +238,7 @@
             break;
         
         default:
-            throw new Error( "Type of the google doc not specified" );
+            throw new Error( "Type of google document not specified" );
             break;
         }
         
@@ -239,8 +273,10 @@
       end: function( event, options ) {
         options._container.style.display = "none";
       },
+      
       _teardown: function( options ) {
-        document.getElementById( options.target ) && document.getElementById( options.target ).removeChild( options._container );
+        document.getElementById( options.target ) && 
+            document.getElementById( options.target ).removeChild( options._container );
       }
   });
 })( Popcorn );
