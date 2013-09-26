@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Popcorn Popup Plug-in Demo</title>
+  <script src="../../popcorn.js"></script>
+  <link rel="stylesheet" href="popcorn.popup.css">
+  <link rel="stylesheet" href="transitions.css">
+  <script src="popcorn.popup.js"></script>
+  <script>
+    document.addEventListener( "DOMContentLoaded", function () {
+      var p = Popcorn( "#video" )
+      .popup({
+  "start": 0,
+  "end": 27.80952,
+  "target": "video",
+  "left": 8.4375,
+  "top": 12.5,
+  "text": "Pop!",
+  "linkUrl": "http://www.google.com",
+  "type": "popup",
+  "triangle": "bottom left",
+  "sound": false,
+  "icon": "info",
+  "flip": false,
+  "width": 29.375,
+  "transition": "popcorn-fade",
+  "fontFamily": "Merriweather",
+  "fontSize": 0,
+  "fontPercentage": 7,
+  "fontColor": "#000000",
+  "fontDecorations": {
+    "bold": false,
+    "italics": false,
+    "underline": false
+  },
+  "zindex": 1000,
+  "id": "TrackEvent0"
+})
+      
+      .volume( 0 )
+      .play();
+    }, false );
+  </script>
+</head>
+<body>
+<h1 id="qunit-header">Popcorn Popup Plug-in Demo</h1>
+  <p>Allows for cool cool things to popup on the screen and be position around the video. Types include Popup, Thought, Speech, Did You Know and Fact</p>
+
+  <div style="width: 500px; height: 500px;">
+    <video id="video"
+      controls 
+      width="250px"
+      poster="../../test/poster.png">
+
+      <source id="mp4"
+        src="../../test/trailer.mp4"
+        type='video/mp4; codecs="avc1, mp4a"'>
+
+      <source id="ogv"
+        src="../../test/trailer.ogv"
+        type='video/ogg; codecs="theora, vorbis"'>
+
+      <p>Your user agent does not support the HTML5 Video element.</p>
+
+    </video>
+    <div id="popupdiv"></div>
+  </div>
+</body>
+</html>
+
